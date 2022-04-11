@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { receiveMessageOnPort } from "worker_threads";
 import TeamInfo from "../models/team";
 
 
@@ -6,6 +7,10 @@ class TeamController {
   //Create user
 
   static async createTeamate(req, res) {
+    const checkoutUser = TeamInfo.findOne({email:req.body.email})
+    if(checkoutUser){
+      return  res.status(404).json({ error: "email arleady registered, please use other email" });
+    }
     const user = await TeamInfo.create(req.body);
 
     if (!user) {
@@ -19,35 +24,27 @@ class TeamController {
   static async getallTeam(req, res) {
     const users = await TeamInfo.find(req.body);
     if (!users) {
-      return res.status(400).json({ error: "user not registerd" });
+      return res.status(400).json({ error: "Team member is not registerd" });
     }
-    return res.status(200).json({ message: "user is found", data: users });
+    return res.status(200).json({ message: "Team members are found", data: users });
   }
   
   static async deleteOneTeamate(req, res) {
     const users = await TeamInfo.findByIdAndDelete(req.params.id);
     if (!users) {
-      return res.status(400).json({ error: "user not deleted" });
+      return res.status(400).json({ error: "Team member not deleted" });
     }
 
-    return res.status(200).json({ message: "user is deleted" });
-  }
-  //login function
-  static async userLogin(req, res) {
-    const user = await TeamInfo.findOne({ email: req.body.email });
-    if (!user) {
-      return res.status(400).json({ error: "user not found" });
+    return res.status(200).json({ message: "Team member is deleted" });
+  };
+  
+  static async updateOneTeammate(req, res){
+    const user = await TeamInfo.findByIdAndUpdate(req.params.id, req.body,{new:true});
+
+    if (!user){
+      return res.status(400).json({error:"teamate is not updated"});
     }
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      user.password = null;
-      const token = tokenAuth.tokenGenerator({ user: user });
-      return res.status(200).json({
-        message: "user succesfully logged in",
-        token: token,
-        data: user,
-      });
-    }
-    return res.status(400).json({ error: "password is wrong" });
+    return res.status(200).json({message:"teammate is already updated"})
   }
   
 }

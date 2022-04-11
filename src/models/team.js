@@ -4,11 +4,10 @@ const userSchema = new Mongoose.Schema(
     title: String,
     image: String,
     Position: String,
-
-    description: {
+    description: String,
+    email:{
       type: String,
-      required: true,
-      unique: true,
+      unique:true,
     },
     role: {
       type: String,
@@ -20,8 +19,6 @@ const userSchema = new Mongoose.Schema(
     timestamps: true,
   }
 );
-
-const user = Mongoose.model("User", userSchema);
-
+const user = Mongoose.model("team", userSchema);
 
 export default user;

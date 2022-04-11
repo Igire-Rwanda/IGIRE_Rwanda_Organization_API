@@ -15,10 +15,7 @@ userRouter.post("/register", TeamController.createTeamate)
 
 userRouter.get("/all",TeamController.getallTeam)
 userRouter.delete("/:id",TeamController.deleteOneTeamate)
-userRouter.post("/login",TeamController.userLogin)
-
-
-
+userRouter.put("/:id", TeamController.updateOneTeammate)
 
 
 export default userRouter;
