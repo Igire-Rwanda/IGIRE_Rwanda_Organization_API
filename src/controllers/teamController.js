@@ -52,9 +52,11 @@ class TeamController {
   };
 
   static async updateOneTeammate(req, res){
-    const user = await TeamInfo.findByIdAndUpdate(req.params.id, req.body,{
-      new:true});
-
+    
+  
+    const user = await TeamInfo.findByIdAndUpdate( req.params.id, req.body, {
+      new: true,
+    });
     if (!user){
       return res.status(400).json({error:"teamate is not updated"});
     }
