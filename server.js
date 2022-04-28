@@ -10,10 +10,8 @@ dotenv.config('./.env');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({extended: false}))
 app.use("/team",teamRoutes);
 
-app.use('/uploads', express.static('./uploads'))
 
 
 app.use("/",(req,res) => res.status(200).json({
