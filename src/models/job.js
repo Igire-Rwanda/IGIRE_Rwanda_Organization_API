@@ -17,7 +17,7 @@ const JobSchema= new mongoose.Schema({
     price:String,
     isactive:{
         type:Boolean,
-        default:true,
+        default:false,
 
     },
    
