@@ -9,6 +9,11 @@ const JobSchema= new mongoose.Schema({
     location:String,
     language:String,
     skills:String,
+    jobType:{
+    type:String,
+        enum:["job","tender"],
+        default:"job",
+    },
     aboutAplicant:String,
     applicantWork:String,
     applicantRequirement:String,
